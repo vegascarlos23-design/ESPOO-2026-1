@@ -1,0 +1,2 @@
+60202857;Carlos;Estudiante;1200.4;29/08/2006
+123101;Ricardo;estudiante;2000.0;16/04/2026
