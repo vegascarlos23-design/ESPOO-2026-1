@@ -24,10 +24,15 @@ public class Cuenta {
     }
     
     public void Agregar(Transaccion elemento) {
-        if (elemento.getMonto() > saldoInicial) {
-            JOptionPane.showMessageDialog(null, "Saldo Insuficiente");
-            return;
+        double diff = elemento.getMonto();
+        if (elemento.getTipo().equalsIgnoreCase("retiro")) {
+            diff *= -1;
+            if (elemento.getMonto() > saldoInicial ) {
+                JOptionPane.showMessageDialog(null, "Saldo Insuficiente");
+                return;
+            }
         }
+        
         
         Nodo_Transaccion nuevo = new Nodo_Transaccion(elemento);
         if (transacciones.getInicio() == null) {
@@ -37,7 +42,7 @@ public class Cuenta {
             transacciones.getFin().setSiguiente(nuevo);
             transacciones.setFin(nuevo);
         }
-        setSaldoInicial(saldoInicial - elemento.getMonto());
+        setSaldoInicial(saldoInicial + diff);
     }
     
     public void Listar(JTable control) {
