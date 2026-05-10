@@ -1,13 +1,16 @@
 package Modelo;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Transaccion {
     private int idTransaccion;
     private int numCuenta;
     private String tipo;
     private double monto;
-    private String fecha;
+    private Date fecha;
 
-    public Transaccion(int idTransaccion, int numCuenta, String tipo, double monto, String fecha) {
+    public Transaccion(int idTransaccion, int numCuenta, String tipo, double monto, Date fecha) {
         this.idTransaccion = idTransaccion;
         this.numCuenta = numCuenta;
         this.tipo = tipo;
@@ -16,7 +19,9 @@ public class Transaccion {
     }
     
     public Object[] getRegistro() {
-        return new Object[]{idTransaccion,numCuenta,tipo,monto,fecha};
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        
+        return new Object[]{idTransaccion,numCuenta,tipo,monto,sdf.format(fecha)};
     } 
 
     public int getIdTransaccion() {
@@ -51,11 +56,11 @@ public class Transaccion {
         this.monto = monto;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
     

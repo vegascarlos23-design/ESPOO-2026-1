@@ -1,21 +1,30 @@
 package Vista;
 
 import Control.Lista_Cuenta;
-import Control.Lista_Transaccion;
+import Control.Nodo_Cuenta;
 import Modelo.Cuenta;
 import Modelo.Transaccion;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
 
 public class JFramePrincipal extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JFramePrincipal.class.getName());
-    
+
     private Lista_Cuenta objLista_Cuenta = new Lista_Cuenta();
-    
+    private Cuenta objListTransaccion = null;
+    private Nodo_Cuenta Lsttemp = new Nodo_Cuenta(new Cuenta(-1, "", 0));
+
     public JFramePrincipal() {
         initComponents();
+        JSpinner.DateEditor editor = new JSpinner.DateEditor(spnFecha, "dd/MM/yyyy");
+
+        spnFecha.setEditor(editor);
         objLista_Cuenta.Listar(tblCuenta);
+        Lsttemp.getElemento().Listar(tblTransaccion);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -35,6 +44,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JButton();
         txtBuscar = new javax.swing.JTextField();
         cboTipoCuenta = new javax.swing.JComboBox<>();
+        btnVerTodo = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblTransaccion = new javax.swing.JTable();
@@ -46,10 +56,10 @@ public class JFramePrincipal extends javax.swing.JFrame {
         btnRegistrarT = new javax.swing.JButton();
         cboTipoT = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-        txtFecha = new javax.swing.JTextField();
         rdbtnAsc = new javax.swing.JRadioButton();
         tdbtnDes = new javax.swing.JRadioButton();
         jLabel8 = new javax.swing.JLabel();
+        spnFecha = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,8 +98,12 @@ public class JFramePrincipal extends javax.swing.JFrame {
         btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(this::btnBuscarActionPerformed);
 
         cboTipoCuenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ahorro", "Corriente" }));
+
+        btnVerTodo.setText("Ver todo");
+        btnVerTodo.addActionListener(this::btnVerTodoActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -114,13 +128,14 @@ public class JFramePrincipal extends javax.swing.JFrame {
                     .addComponent(txtBuscar)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnBuscar)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnVerTodo))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cboTipoCuenta, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -148,7 +163,9 @@ public class JFramePrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBuscar)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnBuscar)
+                            .addComponent(btnVerTodo))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -183,43 +200,48 @@ public class JFramePrincipal extends javax.swing.JFrame {
         Orden.add(rdbtnAsc);
         rdbtnAsc.setSelected(true);
         rdbtnAsc.setText("Ascendente");
+        rdbtnAsc.addActionListener(this::rdbtnAscActionPerformed);
 
         Orden.add(tdbtnDes);
         tdbtnDes.setText("Descendente");
+        tdbtnDes.addActionListener(this::tdbtnDesActionPerformed);
 
         jLabel8.setText("Ordenar por Fecha:");
+
+        spnFecha.setModel(new javax.swing.SpinnerDateModel());
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtIdTransaccion))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(cboTipoT, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtMontoT)
-                            .addComponent(txtFecha)))
-                    .addComponent(jLabel8)
-                    .addComponent(rdbtnAsc)
-                    .addComponent(tdbtnDes)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtMontoT, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel8)
+                            .addComponent(rdbtnAsc)
+                            .addComponent(tdbtnDes)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtIdTransaccion))
+                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addComponent(jLabel5)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(cboTipoT, 0, 159, Short.MAX_VALUE)))))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(spnFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnRegistrarT, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -243,7 +265,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(spnFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnRegistrarT)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -264,16 +286,16 @@ public class JFramePrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -282,7 +304,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -297,11 +319,11 @@ public class JFramePrincipal extends javax.swing.JFrame {
             int numCuenta = Integer.parseInt(txtNumCuentaC.getText());
             String tipoCuenta = cboTipoCuenta.getSelectedItem().toString();
             double saldoInicial = Double.parseDouble(txtSaldoInicial.getText());
-            
+
             Cuenta elemento = new Cuenta(numCuenta, tipoCuenta, saldoInicial);
             objLista_Cuenta.Agregar(elemento);
             objLista_Cuenta.Listar(tblCuenta);
-            
+
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
@@ -314,15 +336,20 @@ public class JFramePrincipal extends javax.swing.JFrame {
                 int numCuenta = Integer.parseInt(tblCuenta.getValueAt(pos, 0).toString());
                 String tipoT = cboTipoT.getSelectedItem().toString();
                 double monto = Double.parseDouble(txtMontoT.getText());
-                String fecha = txtFecha.getText();
-                
+                Date fecha = (Date) spnFecha.getValue();
+
                 Transaccion elemento = new Transaccion(idT, numCuenta, tipoT, monto, fecha);
-                Lista_Transaccion objLista_Transaccion = objLista_Cuenta.getNodoId(numCuenta).getElemento().getTransacciones();
-                objLista_Transaccion.Agregar(elemento);
-                objLista_Transaccion.Listar(tblTransaccion);
+                objListTransaccion = objLista_Cuenta.getNodoPorId(numCuenta).getElemento();
+                objListTransaccion.Agregar(elemento);
+                int criterio = (rdbtnAsc.isSelected() ? 1 : 2);
+                objListTransaccion.BubbleSort(criterio);
+                objListTransaccion.Listar(tblTransaccion);
+                objLista_Cuenta.Listar(tblCuenta);
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Seleccione una cuenta");
             }
-            
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e);
         }
     }//GEN-LAST:event_btnRegistrarTActionPerformed
 
@@ -330,8 +357,10 @@ public class JFramePrincipal extends javax.swing.JFrame {
         int pos = tblCuenta.getSelectedRow();
         if (pos != -1) {
             int numCuenta = Integer.parseInt(tblCuenta.getValueAt(pos, 0).toString());
-            Lista_Transaccion objLista_Transaccion = objLista_Cuenta.getNodoId(numCuenta).getElemento().getTransacciones();
-            objLista_Transaccion.Listar(tblTransaccion);
+            objListTransaccion = objLista_Cuenta.getNodoPorId(numCuenta).getElemento();
+            objListTransaccion.Listar(tblTransaccion);
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Seleccione una cuenta");
         }
     }//GEN-LAST:event_tblCuentaMouseClicked
 
@@ -339,11 +368,49 @@ public class JFramePrincipal extends javax.swing.JFrame {
         int pos = tblCuenta.getSelectedRow();
         if (pos != -1) {
             int numCuenta = Integer.parseInt(tblCuenta.getValueAt(pos, 0).toString());
-            objLista_Cuenta.Eliminar(numCuenta);
-            objLista_Cuenta.Listar(tblCuenta);
+            if (objLista_Cuenta.Eliminar(numCuenta)) {
+                objLista_Cuenta.Listar(tblCuenta);
+                Lsttemp.getElemento().Listar(tblTransaccion);
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Seleccione una cuenta");
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
-    
+
+    private void rdbtnAscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnAscActionPerformed
+        int pos = tblCuenta.getSelectedRow();
+        if (pos != -1) {
+            int numCuenta = Integer.parseInt(tblCuenta.getValueAt(pos, 0).toString());
+            objListTransaccion = objLista_Cuenta.getNodoPorId(numCuenta).getElemento();
+            objListTransaccion.BubbleSort(1);
+            objListTransaccion.Listar(tblTransaccion);
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Seleccione una cuenta");
+        }
+    }//GEN-LAST:event_rdbtnAscActionPerformed
+
+    private void tdbtnDesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tdbtnDesActionPerformed
+        int pos = tblCuenta.getSelectedRow();
+        if (pos != -1) {
+            int numCuenta = Integer.parseInt(tblCuenta.getValueAt(pos, 0).toString());
+            objListTransaccion = objLista_Cuenta.getNodoPorId(numCuenta).getElemento();
+            objListTransaccion.BubbleSort(2);
+            objListTransaccion.Listar(tblTransaccion);
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Seleccione una cuenta");
+        }
+    }//GEN-LAST:event_tdbtnDesActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        int numCuentaBuscar = Integer.parseInt(txtBuscar.getText());
+        objLista_Cuenta.ListarBusqueda(tblCuenta, numCuentaBuscar);
+
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnVerTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerTodoActionPerformed
+        objLista_Cuenta.Listar(tblCuenta);
+    }//GEN-LAST:event_btnVerTodoActionPerformed
+
     public static void main(String args[]) {
 
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -368,6 +435,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnRegistrarT;
+    private javax.swing.JButton btnVerTodo;
     private javax.swing.JComboBox<String> cboTipoCuenta;
     private javax.swing.JComboBox<String> cboTipoT;
     private javax.swing.JLabel jLabel1;
@@ -384,11 +452,11 @@ public class JFramePrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JRadioButton rdbtnAsc;
+    private javax.swing.JSpinner spnFecha;
     private javax.swing.JTable tblCuenta;
     private javax.swing.JTable tblTransaccion;
     private javax.swing.JRadioButton tdbtnDes;
     private javax.swing.JTextField txtBuscar;
-    private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtIdTransaccion;
     private javax.swing.JTextField txtMontoT;
     private javax.swing.JTextField txtNumCuentaC;
