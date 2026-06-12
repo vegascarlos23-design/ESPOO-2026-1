@@ -58,7 +58,7 @@ public class GestorArchivos {
             }
             
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Aqui");
+            JOptionPane.showMessageDialog(null, e);
         }
     }
 }
