@@ -43,7 +43,7 @@ public class RelojForm extends javax.swing.JFrame {
         int dia = LocalDate.now().getDayOfWeek().getValue();
         cboDia.setSelectedIndex(dia-1);
         
-        Timer timer = new  Timer(1000, e -> actualizarHora());
+        Timer timer = new Timer(1000, e -> actualizarHora());
         timer.start();
         objHiloMonitor.start();
     }
