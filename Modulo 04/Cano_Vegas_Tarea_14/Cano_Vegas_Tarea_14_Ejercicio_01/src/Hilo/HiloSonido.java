@@ -18,7 +18,7 @@ public class HiloSonido extends Thread{
     
     @Override
     public void run() {
-        reproducir("renk.wav");
+        reproducir("SonidoAlarma.wav");
         JOptionPane.showMessageDialog(null, "Sonando Alarma!");    
         
         try {
